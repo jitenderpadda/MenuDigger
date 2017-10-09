@@ -96,8 +96,8 @@
                     </button>
                     <img id="loader" class="hidden" src="img/loader_gear.svg" height="30px">
                 </div>
-                <div class="col-md-4">
-                    <select multiple="" class="ui fluid dropdown">
+                <div class="col-md-3">
+                    <select id="tags" multiple="" class="ui fluid dropdown">
                         <option value="">Add Filters</option>
                         <option value="Vegan">Vegan</option>
                         <option value="Vegetarian">Vegetarian</option>
@@ -106,7 +106,15 @@
                         <option value="Lactose Free">Lactose Free</option>
                         <option value="Nut Free">Nut Free</option>
                     </select>
-
+                </div>
+                <div class="col-md-1">
+                    <select id="radius" class="ui fluid dropdown">
+                        <option value="">KM</option>
+                        <option value="5000">5</option>
+                        <option value="10000">10</option>
+                        <option value="20000">20</option>
+                        <option value="50000">50</option>
+                    </select>
                 </div>
               </form>
             </div>
@@ -116,19 +124,20 @@
                 <div class="col-md-6" id="map"></div>
                 <!--Search Result--->
                 <div class="col-md-6" style="height:350px;overflow-x: auto;">
-                    <div class="table-responsive">
-                        <table id="resultTable" class="table table-hover table-striped">
-                            <thead>
-                            <tr>
-                                <th>Restaraunt</th>
-                                <th>Address</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <!--Inserted dynamically via Jquery-->
-                            </tbody>
-                        </table>
-                    </div>
+                    <table id="resultTable" class="ui celled table">
+                        <thead>
+                        <tr>
+                            <th>Restaraunt</th>
+                            <th>Address</th>
+                            <th>Distance</th>
+                            <th>ETA</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--Inserted dynamically via Jquery-->
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <!--View Modal -->

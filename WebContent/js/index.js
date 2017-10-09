@@ -3,6 +3,7 @@ var map;
 var markers=[];
 var requestTerm;
 var userID;
+var pos;
 //On Load
 $(function(){
     //Initialize UI elements
@@ -98,7 +99,7 @@ $(function(){
             req=new XMLHttpRequest();
             req.onreadystatechange=function () {
                 if(this.readyState==4 && this.status==200){
-                    console.log(this.responseText);
+                    //console.log(this.responseText);
                     var result=JSON.parse(this.responseText);
                     console.log(result.items);
                     if(result.items!=null){
@@ -154,10 +155,11 @@ function search(){
     console.log(requestTerm);
     var url;
     //Add Tags paramter in url
-    var filterTags=$(".ui.dropdown").dropdown("get value");
+    var filterTags=$("#tags").dropdown("get value");
+    console.log(filterTags);
     var tags="";
-    for(var tag of filterTags){
-        tags=tags+"&itemTags="+tag;
+    for(i=0; i<filterTags.length;i++){
+        tags=tags+"&itemTags="+filterTags[i];
     }
     console.log(tags);
     if(tags.length>0){
@@ -174,46 +176,99 @@ function search(){
             $("#resultTable").show();
             if (result.items != null) {
                 var resp = new Array(result.items.length);
-                var bounds = new google.maps.LatLngBounds();
+                console.log(result.items);
+                var origin=new Array(pos);
+                var destinations=[];
+                /***Calculate Distance From Current Location***/
                 for (var i = 0; i <result.items.length; i++) {
-                    /***Create Table row***/
-                    resp[i] = result.items[i].restroName;
-                    var row="<tr>"
-                        +"<td>"+result.items[i].restroName+"</td><td>"+result.items[i].restAddress
-                        +"</td><td><input type='button' data-target='#myModal' data-toggle='modal' class='ui primary button' value='View' id='"+result.items[i].id+"' name='"+result.items[i].restroName+"'></td>"
-                        +"</tr>"
-                    $("#resultTable").append(row);
-                    /***Create Map Marker***/
-                    var lat=result.items[i].latLong.split(',')[0];
-                    var long=result.items[i].latLong.split(',')[1];
+                    destinations[i]=result.items[i].restAddress;
+                }
+                var geocoder = new google.maps.Geocoder;
 
-                    var marker=new google.maps.Marker({
-                        position: new google.maps.LatLng(lat,long),
-                        map: map,
-                        animation: google.maps.Animation.DROP
-                    });
-                    /***Add Listener to Marker***/
-                    google.maps.event.addListener( marker, 'click', (
-                        function( marker, i ) {
-                            return function() {
-                                var infowindow = new google.maps.InfoWindow();
-                                infowindow.setContent( result.items[i].restroName );
-                                infowindow.open( map, marker );
+                var service = new google.maps.DistanceMatrixService;
+                service.getDistanceMatrix({
+                    origins: origin,
+                    destinations: destinations,
+                    travelMode: 'DRIVING',
+                    unitSystem: google.maps.UnitSystem.METRIC,
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, function(response, status) {
+                    if (status !== 'OK') {
+                        alert('Error was: ' + status);
+                    } else {
+                        console.log(response);
+                        var destinationList = response.destinationAddresses;
+                        var results = response.rows[0].elements;
+                        console.log(results);
+                        for (var i = 0; i < destinationList.length; i++) {
+                            console.log("output---"+destinationList[i] +
+                                ': ' + results[i].distance.text + ' in ' +
+                                results[i].duration.text);
+                            var radius=$("#radius").dropdown("get value");
+                            console.log(radius);
+                            if(radius!="" && radius!=undefined && radius!=null){
+                                if(results[i].distance.value < $("#radius").dropdown("get value")){
+                                    console.log(results[i].duration.text);
+                                    var ETA= results[i].duration.text;
+                                    var restDist=results[i].distance.text;
+                                    geocoder.geocode({'address': destinationList[i]},addRestaurants(i,restDist,ETA));
+                                }
+                            }
+                            else {
+                                console.log(results[i].duration.text);
+                                var ETA= results[i].duration.text;
+                                var restDist=results[i].distance.text;
+                                geocoder.geocode({'address': destinationList[i]},addRestaurants(i,restDist,ETA));
                             }
                         }
-                    )( marker, i ) );
-                    markers.push(marker);
-                    // Adjust bounds to show new Markers
-                    var position = new google.maps.LatLng(lat,long);
-                    bounds.extend( position );
-                    map.fitBounds( bounds );
-                }
-                console.log(resp);
+                    }
+                });
             }
         }
     }
     req.open("GET", url, true);
     req.send();
+}
+//Add Restaurants to Table and Map
+function addRestaurants(i,restDist,ETA){
+    console.log(ETA);
+    return function(results, status) {
+        /***Add Restaurants***/
+        var bounds = new google.maps.LatLngBounds();
+        bounds.extend(pos);
+        //for (var i = 0; i < result.items.length; i++) {
+            /***Create Table row***/
+                //resp[i] = result.items[i].restroName;
+            var row = "<tr>"
+                + "<td>" + result.items[i].restroName + "</td><td>" + result.items[i].restAddress + "</td><td>" + restDist  + "</td><td>" + ETA
+                + "</td><td><input type='button' data-target='#myModal' data-toggle='modal' class='ui primary button' value='View' id='" + result.items[i].id + "' name='" + result.items[i].restroName + "'></td>"
+                + "</tr>"
+            $("#resultTable").append(row);
+            /***Create Map Marker***/
+            var lat = result.items[i].latLong.split(',')[0];
+            var long = result.items[i].latLong.split(',')[1];
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, long),
+                map: map,
+                animation: google.maps.Animation.DROP
+            });
+            /***Add Listener to Marker***/
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        var infowindow = new google.maps.InfoWindow();
+                        infowindow.setContent("<input type='button' data-target='#myModal' data-toggle='modal' class='ui label' style='width: 100% !important;' value='" + result.items[i].restroName + "' id='" + result.items[i].id + "' name='" + result.items[i].restroName + "'>");
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            markers.push(marker);
+            // Adjust bounds to show new Markers
+            var position = new google.maps.LatLng(lat, long);
+            bounds.extend(position);
+            map.fitBounds(bounds);
+        //}
+    }
 }
 //Map
 function initMap() {
@@ -247,7 +302,7 @@ function initMap() {
     infoWindow = new google.maps.InfoWindow;
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
