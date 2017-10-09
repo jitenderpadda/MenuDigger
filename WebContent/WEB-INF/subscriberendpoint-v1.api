@@ -1,0 +1,192 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://s3628144-cc2017.appspot.com/_ah/api",
+  "name" : "subscriberendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "discovery" : [ "PUBLIC" ],
+  "adapter" : {
+    "bns" : "https://s3628144-cc2017.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "jitender.com",
+  "ownerName" : "jitender.com",
+  "packagePath" : "menudigger.entity",
+  "methods" : {
+    "subscriberendpoint.getSubscriber" : {
+      "path" : "subscriber/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.SubscriberEndpoint.getSubscriber",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "subscriberendpoint.listSubscriber" : {
+      "path" : "subscriber",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.SubscriberEndpoint.listSubscriber",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "subscriberendpoint.removeSubscriber" : {
+      "path" : "subscriber/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.SubscriberEndpoint.removeSubscriber",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "subscriberendpoint.insertSubscriber" : {
+      "path" : "subscriber",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.SubscriberEndpoint.insertSubscriber",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "subscriberendpoint.updateSubscriber" : {
+      "path" : "subscriber",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.SubscriberEndpoint.updateSubscriber",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "Subscriber" : {
+        "id" : "Subscriber",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CollectionResponse_Subscriber" : {
+        "id" : "CollectionResponse_Subscriber",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Subscriber"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.jitender.menudigger.entity.SubscriberEndpoint.getSubscriber" : {
+        "response" : {
+          "$ref" : "Subscriber"
+        }
+      },
+      "com.jitender.menudigger.entity.SubscriberEndpoint.listSubscriber" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Subscriber"
+        }
+      },
+      "com.jitender.menudigger.entity.SubscriberEndpoint.removeSubscriber" : {
+      },
+      "com.jitender.menudigger.entity.SubscriberEndpoint.insertSubscriber" : {
+        "request" : {
+          "$ref" : "Subscriber"
+        },
+        "response" : {
+          "$ref" : "Subscriber"
+        }
+      },
+      "com.jitender.menudigger.entity.SubscriberEndpoint.updateSubscriber" : {
+        "request" : {
+          "$ref" : "Subscriber"
+        },
+        "response" : {
+          "$ref" : "Subscriber"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://s3628144-cc2017.appspot.com/_ah/api",
+  "name" : "usercommentendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "discovery" : [ "PUBLIC" ],
+  "adapter" : {
+    "bns" : "https://s3628144-cc2017.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "jitender.com",
+  "ownerName" : "jitender.com",
+  "packagePath" : "menudigger.entity",
+  "methods" : {
+    "usercommentendpoint.getUserComment" : {
+      "path" : "usercomment/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.UserCommentEndpoint.getUserComment",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "usercommentendpoint.listUserComment" : {
+      "path" : "usercomment",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.UserCommentEndpoint.listUserComment",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          },
+          "searchItemId" : {
+            "type" : "int64",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "usercommentendpoint.removeUserComment" : {
+      "path" : "usercomment/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.UserCommentEndpoint.removeUserComment",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "usercommentendpoint.insertUserComment" : {
+      "path" : "usercomment",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.UserCommentEndpoint.insertUserComment",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "usercommentendpoint.updateUserComment" : {
+      "path" : "usercomment",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.UserCommentEndpoint.updateUserComment",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "UserComment" : {
+        "id" : "UserComment",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "userId" : {
+            "type" : "string"
+          },
+          "itemId" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "comment" : {
+            "type" : "string"
+          },
+          "rating" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "CollectionResponse_UserComment" : {
+        "id" : "CollectionResponse_UserComment",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "UserComment"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.jitender.menudigger.entity.UserCommentEndpoint.getUserComment" : {
+        "response" : {
+          "$ref" : "UserComment"
+        }
+      },
+      "com.jitender.menudigger.entity.UserCommentEndpoint.listUserComment" : {
+        "response" : {
+          "$ref" : "CollectionResponse_UserComment"
+        }
+      },
+      "com.jitender.menudigger.entity.UserCommentEndpoint.removeUserComment" : {
+      },
+      "com.jitender.menudigger.entity.UserCommentEndpoint.insertUserComment" : {
+        "request" : {
+          "$ref" : "UserComment"
+        },
+        "response" : {
+          "$ref" : "UserComment"
+        }
+      },
+      "com.jitender.menudigger.entity.UserCommentEndpoint.updateUserComment" : {
+        "request" : {
+          "$ref" : "UserComment"
+        },
+        "response" : {
+          "$ref" : "UserComment"
+        }
+      }
+    }
+  }
+}

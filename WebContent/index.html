@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <title>Menu Digger</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="img/favicon.png">
+  <!--Jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!--Bootstrap--->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--Semantic UI-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+  <!--Jquery UI-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!--Google Login-->
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="1023429906242-ku7058febfmfc5q9o0jndk786gabc1b7.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!--GoogleMap JS-->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-dylXl89QOKbTI3qyOBd21OeDaNQpEyk&callback=initMap" async defer></script>
+  <!--Custom JS-->
+   <script src="js/index.js"></script>
+  <!--Custom Theme and Style-->
+  <link href="css/themeStyle.css" rel="stylesheet" type="text/css" >
+  <link href="css/style.css" rel="stylesheet" type="text/css" >
+</head>
+<body>
+  <!--Nav Bar-->
+    <header class="site-header">
+        <div class="top">
+            <div class="container">
+                <div class="wrapper">
+                    <div class="col-sm-3 col-sm-offset-9">
+                        <div class="g-signin2" style="float: right;font-family: Montserrat !important;" data-onsuccess="onSignIn" data-theme="dark"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="data" style="float: left">
+                        <button  id="subscribe" class="ui primary button">Subscribe</button>
+                    </div>
+                    <div class="data">
+                        <div style="float: right;padding-top: 10px">
+                            <label id="firstName"></label>
+                            <a href="#" onclick="signOut()">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <i class="fa fa-bars"></i>
+                </button>
+                    <a href="home" class="navbar-brand logo-text">
+                        Menu Digger
+                    </a>
+                    <a href="home" class="navbar-brand">
+                        <img src="img/logo.png" alt="Logo" height="100px" width="100px"/>
+                    </a>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+                    <ul class="nav navbar-nav main-navbar-nav">
+                        <li ><a href="#">Home</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+                <!-- END MAIN NAVIGATION -->
+            </div>
+        </nav>
+    </header>
+    <!--Body-->
+    <body>
+        <div class="container">
+            <!--<div class="row"><br/>
+                <div class="col-md-4">
+                    <strong><h3>Search Restaraunt Menus</h3></strong>
+                </div>
+            </div>--><br/>
+            <div class="row">
+              <form id="validationForm">
+                <div class="col-md-6">
+                    <!--<input id="search" autofocus class="form-control" type="text" onkeyup="getMenuItems(this.value)" placeholder="Search">-->
+                    <input id="search" style="text-transform:uppercase;font-family:Montserrat;" autofocus class="form-control" type="text" placeholder="Search Menu Items" required>
+                </div>
+                  <div class="col-md-2">
+                    <button class="ui primary button" >
+                        <span class="glyphicon glyphicon-eye-open"></span> <span style="font-family:Montserrat">Search</span>
+                    </button>
+                    <img id="loader" class="hidden" src="img/loader_gear.svg" height="30px">
+                </div>
+                <div class="col-md-4">
+                    <select multiple="" class="ui fluid dropdown">
+                        <option value="">Add Filters</option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Halal">Halal</option>
+                        <option value="Gluten Free">Gluten Free</option>
+                        <option value="Lactose Free">Lactose Free</option>
+                        <option value="Nut Free">Nut Free</option>
+                    </select>
+
+                </div>
+              </form>
+            </div>
+            <br/>
+            <div class="row">
+                <!--Map-->
+                <div class="col-md-6" id="map"></div>
+                <!--Search Result--->
+                <div class="col-md-6" style="height:350px;overflow-x: auto;">
+                    <div class="table-responsive">
+                        <table id="resultTable" class="table table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th>Restaraunt</th>
+                                <th>Address</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <!--Inserted dynamically via Jquery-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--View Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <!--<div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h3 class="modal-title" style="font-family: inherit !important;" id="modalHeader">Modal title</h3>
+                        </div>-->
+                        <div class="modal-body" style="font-family: inherit !important;">
+                            <div class="ui form">
+                                <!--Item Details-->
+                                <div class="ui fluid card">
+                                    <div class="content">
+                                        <div id="cardHeader" class="header"></div>
+                                        <div class="description">
+                                            <div class="field">
+                                                <label>Average Rating</label>
+                                                <div class="ui massive star rating" data-rating="4" data-max-rating="5"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="extra content">
+                                        <!--Rate-->
+                                            <div id="commentSection" class="hidden">
+                                                <div class="field">
+                                                    <label>Your Rating</label>
+                                                    <div id="inputRating" class="ui huge star rating" data-rating="0" data-max-rating="5"></div>
+                                                </div>
+                                                <div class="field">
+                                                    <label>Comments</label>
+                                                    <textarea id="inputComments"></textarea>
+                                                </div>
+                                            </div>
+                                            <span class="left floated">
+                                                <button id="rateBtn" type="button" style="font-family: inherit !important;" class="ui primary button">Rate</button>
+                                            </span>
+                                            <span class="right floated"><br/>
+                                                <button id="cancelBtn" type="button" style="font-family: inherit !important;" class="btn btn-secondary">Cancel</button>
+                                                <button id="submitBtn" type="submit" style="font-family: inherit !important;" class="ui primary button">Submit</button>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <!--Comments Table-->
+                            <div style="height:300px;overflow-x: scroll;">
+                                <table class="ui celled padded table">
+                                    <thead>
+                                        <tr>
+                                            <th class="ui center aligned">User</th>
+                                            <th>Rating</th>
+                                            <th>Comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!--Injected via Jquery-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" style="font-family: inherit !important;" class="btn btn-secondary" data-dismiss="modal">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Subscribe Successful Modal-->
+            <div class="ui basic modal">
+                <div class="ui icon header">
+                    <i class="checked calendar icon"></i>
+                    Subscribed successfully !
+                </div>
+                <div class="content">
+                    <p>You will get a weekly email of the top rated food items.</p>
+                </div>
+                <div class="actions">
+                    <div class="ui green ok inverted button">
+                        <i class="checkmark icon"></i>
+                        Done
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <!--Footer-->
+    <footer class="site-footer">
+        <div id="copyright">
+            <div class="container">
+                <p class="pull-left">&copy; 2017 RMIT</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

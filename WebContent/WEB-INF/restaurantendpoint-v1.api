@@ -1,0 +1,207 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://s3628144-cc2017.appspot.com/_ah/api",
+  "name" : "restaurantendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "discovery" : [ "PUBLIC" ],
+  "adapter" : {
+    "bns" : "https://s3628144-cc2017.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "jitender.com",
+  "ownerName" : "jitender.com",
+  "packagePath" : "menudigger.entity",
+  "methods" : {
+    "restaurantendpoint.listRestaurant" : {
+      "path" : "restaurant",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.RestaurantEndpoint.listRestaurant",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          },
+          "searchItem" : {
+            "type" : "string",
+            "required" : false
+          },
+          "itemTags" : {
+            "repeated" : true,
+            "type" : "string",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "restaurantendpoint.getRestaurant" : {
+      "path" : "restaurant/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.RestaurantEndpoint.getRestaurant",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "restaurantendpoint.insertRestaurant" : {
+      "path" : "restaurant",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.RestaurantEndpoint.insertRestaurant",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "restaurantendpoint.updateRestaurant" : {
+      "path" : "restaurant",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.RestaurantEndpoint.updateRestaurant",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "restaurantendpoint.removeRestaurant" : {
+      "path" : "restaurant/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.RestaurantEndpoint.removeRestaurant",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "CollectionResponse_Restaurant" : {
+        "id" : "CollectionResponse_Restaurant",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Restaurant"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Restaurant" : {
+        "id" : "Restaurant",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "restroName" : {
+            "type" : "string"
+          },
+          "latLong" : {
+            "type" : "string"
+          },
+          "restAddress" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.jitender.menudigger.entity.RestaurantEndpoint.listRestaurant" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Restaurant"
+        }
+      },
+      "com.jitender.menudigger.entity.RestaurantEndpoint.getRestaurant" : {
+        "response" : {
+          "$ref" : "Restaurant"
+        }
+      },
+      "com.jitender.menudigger.entity.RestaurantEndpoint.insertRestaurant" : {
+        "request" : {
+          "$ref" : "Restaurant"
+        },
+        "response" : {
+          "$ref" : "Restaurant"
+        }
+      },
+      "com.jitender.menudigger.entity.RestaurantEndpoint.updateRestaurant" : {
+        "request" : {
+          "$ref" : "Restaurant"
+        },
+        "response" : {
+          "$ref" : "Restaurant"
+        }
+      },
+      "com.jitender.menudigger.entity.RestaurantEndpoint.removeRestaurant" : {
+      }
+    }
+  }
+}

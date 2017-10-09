@@ -1,0 +1,221 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://s3628144-cc2017.appspot.com/_ah/api",
+  "name" : "menuitemendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "discovery" : [ "PUBLIC" ],
+  "adapter" : {
+    "bns" : "https://s3628144-cc2017.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "jitender.com",
+  "ownerName" : "jitender.com",
+  "packagePath" : "menudigger.entity",
+  "methods" : {
+    "menuitemendpoint.removeMenuItem" : {
+      "path" : "menuitem/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.MenuItemEndpoint.removeMenuItem",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "menuitemendpoint.getMenuItem" : {
+      "path" : "menuitem/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.MenuItemEndpoint.getMenuItem",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "menuitemendpoint.listMenuItem" : {
+      "path" : "menuitem",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.MenuItemEndpoint.listMenuItem",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          },
+          "search" : {
+            "type" : "string",
+            "required" : false
+          },
+          "restroid" : {
+            "type" : "string",
+            "required" : false
+          },
+          "tags" : {
+            "repeated" : true,
+            "type" : "string",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "menuitemendpoint.insertMenuItem" : {
+      "path" : "menuitem",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.MenuItemEndpoint.insertMenuItem",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "menuitemendpoint.updateMenuItem" : {
+      "path" : "menuitem",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.jitender.menudigger.entity.MenuItemEndpoint.updateMenuItem",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "MenuItem" : {
+        "id" : "MenuItem",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "restaurantId" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "price" : {
+            "type" : "number"
+          },
+          "rating" : {
+            "type" : "integer"
+          },
+          "imgSrc" : {
+            "type" : "string"
+          }
+        }
+      },
+      "MenuItemCollection" : {
+        "id" : "MenuItemCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "MenuItem"
+            }
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.jitender.menudigger.entity.MenuItemEndpoint.removeMenuItem" : {
+      },
+      "com.jitender.menudigger.entity.MenuItemEndpoint.getMenuItem" : {
+        "response" : {
+          "$ref" : "MenuItem"
+        }
+      },
+      "com.jitender.menudigger.entity.MenuItemEndpoint.listMenuItem" : {
+        "response" : {
+          "$ref" : "MenuItemCollection"
+        }
+      },
+      "com.jitender.menudigger.entity.MenuItemEndpoint.insertMenuItem" : {
+        "request" : {
+          "$ref" : "MenuItem"
+        },
+        "response" : {
+          "$ref" : "MenuItem"
+        }
+      },
+      "com.jitender.menudigger.entity.MenuItemEndpoint.updateMenuItem" : {
+        "request" : {
+          "$ref" : "MenuItem"
+        },
+        "response" : {
+          "$ref" : "MenuItem"
+        }
+      }
+    }
+  }
+}

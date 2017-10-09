@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="WebApp_ID" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <display-name>MyAPIProject</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description>MenuDiggerServlet</description>
+    <display-name>MenuDiggerServlet</display-name>
+    <servlet-name>MenuDiggerServlet</servlet-name>
+    <servlet-class>com.jitender.menudigger.MenuDiggerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MenuDiggerServlet</servlet-name>
+    <url-pattern>/menudigger</url-pattern>
+  </servlet-mapping>
+ <servlet>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+  <init-param>
+   <param-name>services</param-name>
+   <param-value>com.jitender.menudigger.entity.MenuItemEndpoint,com.jitender.menudigger.entity.RestaurantEndpoint,com.jitender.menudigger.entity.SubscriberEndpoint,com.jitender.menudigger.entity.UserCommentEndpoint</param-value>
+  </init-param>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <url-pattern>/_ah/spi/*</url-pattern>
+ </servlet-mapping>
+</web-app>
