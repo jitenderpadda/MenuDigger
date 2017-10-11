@@ -64,7 +64,7 @@ public class MenuDiggerServlet extends HttpServlet {
 		}
 		
 		/*** Send Email ***/
-		Sendgrid mail = new Sendgrid("jitenderpadda@gmail.com", "Welcome@234");
+		Sendgrid mail = new Sendgrid("XXXXX", "XXXXX");
 		// set email data
 		mail.setTo("test@sharklasers.com").setFrom("me@bar.com").setSubject("Subject goes here").setText("Hello World!")
 				.setHtml("<strong>" + html + "</strong>");
